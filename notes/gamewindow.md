@@ -1,0 +1,1 @@
+The screenshots included in the figma are roughly 1000x700 px, this can be modified but I think it fits the screen nicely for a desktop game. 

@@ -13,3 +13,11 @@ python -m http.server 8000
 ```
 
 On your browser, type ```localhost:8000``` in the URL bar
+
+## TO CLOSE:
+In the same command prompt / powershell window ```CTRL+C```
+
+
+# Dilemmas
+- Can we use a game engine? There's a couple open source free use options that aren't half bad
+- If we CAN'T use a game engine, that changes the development process entirely.

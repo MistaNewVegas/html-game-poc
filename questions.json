@@ -1,0 +1,31 @@
+{
+    "Which level of government is responsible for healthcare?": {
+        "correct": ["Provincial"],
+        "incorrect": [
+            "Municipal",
+            "Federal"
+        ]
+    }
+
+    ,
+
+    "What is the capital of Canada?": {
+        "correct": ["Ottawa"],
+        "incorrect": [
+            "Toronto",
+            "Washington",
+            "Vancouver"
+        ]
+    }
+
+    ,
+
+    "Who is the current leader of the New Democratic Party?": {
+        "correct": ["Jagmeet Singh"],
+        "incorrect": [
+            "Justin Trudeau",
+            "Pierre Poilievre",
+            "Doug Ford"
+        ]
+    }
+}

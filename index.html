@@ -30,6 +30,22 @@
             text-align: center;
         }
 
+        .window div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: black;
+            border: 2px solid white;
+        }
+
+
+
+
     </style>
 </head>
 <body>
@@ -37,11 +53,12 @@
     <div class="window">
         <h1>Game test Window</h1>
         <hr>
-        <div>
-            <img src="https://placehold.co/1000x700">
+        <div id="gamecanvas">
+            <canvas width="1000" height="700"></canvas>
+            <script src="game.js"></script>
         </div>
         <hr>
-        <p></p>
+        <p> Arrow keys to move</p>
     </div>
 
 
