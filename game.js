@@ -1,7 +1,7 @@
 // Initial game state
 const gameState = {
     player: {
-        health: 100,
+        health: 3,
         points: 50,
         pos_x: 200,
         pos_y: 100,
@@ -49,22 +49,13 @@ document.addEventListener("keyup", () => {
 // Update game state
 function updateGameState() {
     // Update player position
-    gameState.player.pos_x += gameState.player.direction[0] * 5;
-    gameState.player.pos_y += gameState.player.direction[1] * 5;
+    gameState.player.pos_x += gameState.player.direction[0] * 3; // speed 
+    gameState.player.pos_y += gameState.player.direction[1] * 3;
 
     // Ensure the player stays within bounds
-    gameState.player.pos_x = Math.max(0, Math.min(canvas.width, gameState.player.pos_x));
-    gameState.player.pos_y = Math.max(0, Math.min(canvas.height, gameState.player.pos_y));
+    gameState.player.pos_x = Math.max(0, Math.min(canvas.width-250, gameState.player.pos_x));
+    gameState.player.pos_y = Math.max(75, Math.min(canvas.height, gameState.player.pos_y));
 
-    // Update enemy positions
-    for (const enemy of gameState.enemies) {
-        enemy.pos_x += enemy.direction[0] * 2; // Enemy speed
-        enemy.pos_y += enemy.direction[1] * 2;
-
-        // Bounce enemies back when they hit canvas edges
-        if (enemy.pos_x < 0 || enemy.pos_x > canvas.width) enemy.direction[0] *= -1;
-        if (enemy.pos_y < 0 || enemy.pos_y > canvas.height) enemy.direction[1] *= -1;
-    }
 }
 
 // Draw the game state
@@ -78,22 +69,61 @@ function drawGameState(ctx) {
     ctx.arc(gameState.player.pos_x, gameState.player.pos_y, 15, 0, Math.PI * 2);
     ctx.fill();
 
-    // enemies
-    ctx.fillStyle = "red";
-    for (const enemy of gameState.enemies) {
-        ctx.beginPath();
-        ctx.arc(enemy.pos_x, enemy.pos_y, 15, 0, Math.PI * 2);
-        ctx.fill();
+}
+
+// Draw a grid of red squares within the defined region
+function drawGrid() {
+    const squareSize = 50; // Size of each square
+
+    // Define the region
+    const startX = 0; // 75% of canvas width
+    const endX = 0.75 * canvas.width; // Rightmost edge of the canvas
+
+    const startY = (55 / 775) * canvas.height; // 55/775 of canvas height
+    const endY = canvas.height; // Bottom edge of the canvas
+
+    // Calculate rows and columns that fit in the region
+    const cols = Math.floor((endX - startX) / squareSize);
+    const rows = Math.floor((endY - startY) / squareSize);
+
+    // Draw the grid
+    ctx.strokeStyle = "red"; // Red border
+    ctx.lineWidth = 1; // 1px border thickness
+    ctx.font = "16px Arial"; // Font for text
+    ctx.fillStyle = "white"; // Text color
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            const x = startX + col * squareSize; // X position of square
+            const y = startY + row * squareSize; // Y position of square
+
+            // Draw the outlined square
+            ctx.strokeRect(x, y, squareSize, squareSize);
+
+            // Generate alphanumeric coordinates
+            const coord = `${String.fromCharCode(65 + row)}${col + 1}`; // A1, B1, etc.
+
+            // Calculate text position (center of the square)
+            const textX = x + squareSize / 2;
+            const textY = y + squareSize / 2;
+
+            // Draw the coordinates in the center of the square
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(coord, textX, textY);
+        }
     }
 }
+
+
 
 // Game loop
 function gameLoop() {
     updateGameState();
     drawGameState(ctx);
+    drawGrid();
     requestAnimationFrame(gameLoop);
 }
-
 
 const canvasContainer = document.getElementById("gamecanvas");
 canvasContainer.innerHTML = "";
